@@ -6,10 +6,10 @@ int main(int argc, char* argv[])
 	int x;
 	cout << "Введите значение x\n";
 	cin >> x;
-	int b;
+	int a, b, c, d;
 	int a = x * x;
-	int c = b / x;
 	int b = a * a;
+	int c = b / x;
 	int d = b + c + a + x + 1;
 	cout << "Значение уравнения- " << d;
 

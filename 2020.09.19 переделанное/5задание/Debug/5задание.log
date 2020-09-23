@@ -1,0 +1,4 @@
+﻿  Source.cpp
+C:\Users\И\Desktop\projectsproga\projects\2020.09.19 переделанное\5задание\Source.cpp(10,9): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\И\Desktop\projectsproga\projects\2020.09.19 переделанное\5задание\Source.cpp(11,10): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+  5задание.vcxproj -> C:\Users\И\Desktop\projectsproga\projects\2020.09.19 переделанное\Debug\5задание.exe

@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 	int a = 1, b = 0;
 	while (a <= n)
 	{
-		for (a, n; a <= n; ++a)
+		for (; a <= n; ++a)
 		{
 			if (n % a == 0)
 			{
