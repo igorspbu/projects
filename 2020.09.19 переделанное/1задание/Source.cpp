@@ -3,15 +3,11 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "Russian");
-	int x;
+	int x = 0;
 	cout << "Введите значение x\n";
 	cin >> x;
-	int a, b, c, d;
-	int a = x * x;
-	int b = a * a;
-	int c = b / x;
-	int d = b + c + a + x + 1;
-	cout << "Значение уравнения- " << d;
-
+	int a = x * x, b = 0;
+	b = (a + x) * (a + 1) + 1;
+	cout << "Значение уравнения- " << b;
 	return EXIT_SUCCESS;
 }
