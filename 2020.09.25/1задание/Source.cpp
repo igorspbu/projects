@@ -110,14 +110,10 @@ void reverse(int* a, int count)
 	cout << endl;
 }
 
-void cinMenu(int*& a, int& cap, int& count)
+void cinMenu(int*& a, int& cap, int& count, int choice)
 {
-	int choice = -1;
-
 	while (choice != 0)
 	{
-		Menu();
-		cin >> choice;
 		switch (choice)
 		{
 		case 1:
@@ -167,11 +163,17 @@ int main(int argc, char* argv[])
 	int cap = 10;
 	int* a = new int[cap];
 	int count = 0;
-
-	cout << "¬ведите элементы массива " << endl;
+	int choice = 0;
 	cinArr(a, cap, count);
-	cinMenu(a, cap, count);
 
+	do
+	{
+		system("cls");
+		Menu();
+		cin >> choice;
+		cinMenu(a, count, cap, choice);
+		system("pause");
+	} while (choice != 0);
 	delete[]a;
 	return EXIT_SUCCESS;
 }

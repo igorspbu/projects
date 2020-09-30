@@ -44,14 +44,8 @@ void Menu()
 	cout << "¬ведите операцию" << endl;
 }
 
-void addrand(int*&arr,int& cap,int& count)
+void addrand(int*& arr, int& cap, int& count, int n, int a, int b)
 {
-	int n = 0;
-	int a = 0;
-	int b = 0;
-	cin >> n;
-	cin >> a;
-	cin >> b;
 	for (n; n > 0; --n)
 	{
 		if (count >= cap)
@@ -113,21 +107,19 @@ void shift(int* arr, int count)
 	arr[0] = x; 
 }
 
-void turn(int* arr, int count)
+void turn(int* arr, int count, int w)
 {
-	int n = 0;
-	cin >> n;
-	if (n <= count - 1)
+	if (w <= count - 1)
 	{
 		int x = 0;
-		for (int i = 0; i < n / 2; ++i)
+		for (int i = 0; i < w / 2; ++i)
 		{
 			x = arr[i];
-			arr[i] = arr[n - 1 - i];
-			arr[n - 1 - i] = x;
+			arr[i] = arr[w - 1 - i];
+			arr[w - 1 - i] = x;
 		}
 		int q = 0;
-		for (int i = n; n + (count - n) / 2 > i; ++i)
+		for (int i = w; w + (count - w) / 2 > i; ++i)
 		{
 			x = arr[i];
 			arr[i] = arr[count - 1 - q];
@@ -137,47 +129,50 @@ void turn(int* arr, int count)
 	}
 }
 
-void cinMenu(int*& arr, int& cap, int& count)
+void cinMenu(int*& arr, int& cap, int& count,int choice)
 {
-	int choice = -1;
 	while (choice != 0)
 	{
-		Menu();
-		cin >> choice;
 		switch (choice)
 		{
 		case 1:
 		{
+
+			int n = 0;
+			int a = 0;
+			int b = 0;
 			cout << "¬ведите n, а затем введите a и b, где a - нижн€€ граница промежутка" << endl;
-			addrand(arr, cap, count);
-			allNumber(arr, count);
+			cin >> n;
+			cin >> a;
+			cin >> b;
+			addrand(arr, cap, count, a, b, n);
 			break;
 		}
 		case 2:
 		{
 			reverse(arr, count);
-			allNumber(arr, count);
 			break;
 		}
 		case 3:
 		{
 			reversecouple(arr, count);
-			allNumber(arr, count);
 			break;
 		}
 		case 4:
 		{
 			shift(arr, count);
-			allNumber(arr, count);
 			break;
 		}
 		case 5:
 		{
+			int w = 0;
 			cout << "¬ведите индекс элемента, раздел€ющего половинки" << endl;
-			turn(arr, count);
-			allNumber(arr, count);
+			cin >> w;
+			turn(arr, count, w);
 			break;
 		}
+
+
 		}
 	}
 }
@@ -188,11 +183,19 @@ int main(int argc, char* argv[])
 	int cap = 10;
 	int* arr = new int[cap];
 	int count = 0;
-	cout << "¬ведите числа в массив " << endl;
+	int choice = 0;
+
 	cinArr(arr, cap, count);
-	cinMenu(arr, cap, count);
+
+	do
+	{
+		system("cls");
+		Menu(); 
+		cin >> choice;
+		cinMenu(arr, count, cap, choice);
+		system("pause");
+	} while (choice != 0);
 
 	delete[]arr;
 	return EXIT_SUCCESS;
-
 }
