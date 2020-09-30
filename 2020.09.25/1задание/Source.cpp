@@ -1,29 +1,17 @@
 #include <iostream>
 using namespace std;
 
-void expandArr(int*& a, int& cap, int& count)
+void expandArr(int*& a, int& cap)
 {
-	cout << "Введите числа в массив" << endl;
-	while (true)
+	int cap1 = cap * 2;
+	int* temp = new int[cap1];
+	for (int i = 0; i < cap; ++i)
 	{
-		int x = 0;
-		;
-		cin >> x;
-		if (x == 0)
-			break;
-		if (count == cap)
-		{
-			cap *= 2;
-			int* temp = new int[cap];
-			for (int i = 0; i < count; ++i)
-				temp[i] = a[i];
-			delete[] a;
-			a = temp;
-		}
-
-		a[count] = x;
-		count++;
+		temp[i] = a[i];
 	}
+	delete[]a;
+	a = temp;
+	cap = cap1;
 }
 
 void Menu()
@@ -38,19 +26,11 @@ void Menu()
 	cout << "Введите операцию" << endl;
 }
 
-void addNumber(int*& a, int& cap, int& count)
+void addNumber(int*& a, int& cap, int& count, int x)
 {
-
-	int x = 0;
-	cin >> x;
 	if (count == cap)
 	{
-		cap++;
-		int* temp = new int[cap];
-		for (int i = 0; i < count; ++i)
-			temp[i] = a[i];
-		delete[] a;
-		a = temp;
+		expandArr(a, cap);
 	}
 
 	a[count] = x;
@@ -66,21 +46,38 @@ void allNumber(int* a, int count)
 	cout << endl << endl;
 }
 
-void numMaxEl(int* a, int count)
+void cinArr(int*& a, int& cap, int& count)
 {
-	int max = a[0];
-	int i = 0;
-	for (i,count;i < count; ++i)
+	while (true)
 	{
-		if (a[i]>max)
+		int x = 0;
+		cin >> x;
+		if (x == 0)
+			break;
+		if (count == cap)
 		{
-			max=i;
+			expandArr(a, cap);
 		}
+		a[count] = x;
+		++count;
 	}
-	cout << "Номер наибольшего элемента - " << max << endl;
 }
 
-void minEl(int* a, int count)
+int numMaxEl(int* a, int count)
+{
+	int max = 0;
+	int i = 0;
+	for (i, count; i < count; ++i)
+	{
+		if (a[i] >a [max])
+		{
+			max = i;
+		}
+	}
+	return max;
+}
+
+int minEl(int* a, int count)
 {
 	int min = 0;
 	min = a[0];
@@ -91,17 +88,17 @@ void minEl(int* a, int count)
 			min == a[i];
 		}
 	}
-	cout << "Наименьший элемент - " << min << endl;
+	return min;
 }
 
-void sum(int* a, int count)
+int sum(int* a, int count)
 {
 	int sum = 0;
 	for (int i = 0; i < count; ++i)
 	{
 		sum = sum + a[i];
 	}
-	cout << "Сумма элементов - " << sum << endl;
+	return sum;
 }
 
 void reverse(int* a, int count)
@@ -113,16 +110,11 @@ void reverse(int* a, int count)
 	cout << endl;
 }
 
-int main(int argc, char* argv[])
+void cinMenu(int*& a, int& cap, int& count)
 {
-	setlocale(LC_ALL, "Russian");
-	int cap = 10;
-	int* a = new int[cap];
-	int count = 0;
-	expandArr(a, cap, count);
 	int choice = -1;
 
-	while (choice!=0)
+	while (choice != 0)
 	{
 		Menu();
 		cin >> choice;
@@ -130,7 +122,10 @@ int main(int argc, char* argv[])
 		{
 		case 1:
 		{
-			addNumber(a, cap, count);
+			cout << "Введите число" << endl;
+			int x = 0;
+			cin >> x;
+			addNumber(a, cap, count, x);
 			break;
 		}
 		case 2:
@@ -140,17 +135,20 @@ int main(int argc, char* argv[])
 		}
 		case 3:
 		{
-			numMaxEl(a, count);
+			cout << "Номер наибольшего элемента - " << numMaxEl(a, count);
+			cout << endl;
 			break;
 		}
 		case 4:
 		{
-			minEl(a, count);
+			cout << "Минимальный элемент- " << minEl(a, count);
+			cout << endl;
 			break;
 		}
 		case 5:
 		{
-			sum(a, count);
+			cout << "Сумма элементов - " << sum(a, count);
+			cout << endl;
 			break;
 		}
 		case 6:
@@ -158,17 +156,22 @@ int main(int argc, char* argv[])
 			reverse(a, count);
 			break;
 		}
-		if (choice == 0)
-		{
-			exit;
-		}
 		}
 	}
-	delete[]a;
-	return EXIT_SUCCESS;
-
 }
 
+int main(int argc, char* argv[])
+{
+	setlocale(LC_ALL, "Russian");
 
+	int cap = 10;
+	int* a = new int[cap];
+	int count = 0;
 
+	cout << "Введите элементы массива " << endl;
+	cinArr(a, cap, count);
+	cinMenu(a, cap, count);
 
+	delete[]a;
+	return EXIT_SUCCESS;
+}

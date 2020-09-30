@@ -1,27 +1,35 @@
 #include <iostream>
 using namespace std;
 
-void expandArr(int*& arr, int& cap, int& count)
+void expandArr(int*& arr, int& cap)
 {
-	cout << "¬ведите числа в массив" << endl;
+	int cap1 = cap * 2;
+	int* temp = new int[cap1];
+	for (int i = 0; i < cap; ++i)
+	{
+		temp[i] = arr[i];
+	}
+	delete[]arr;
+	arr = temp;
+	cap = cap1;
+}
+
+void cinArr(int*& arr, int& cap, int count)
+{
 	while (true)
 	{
 		int x = 0;
 		cin >> x;
 		if (x == 0)
-			break;
-		if (count == cap)
 		{
-			cap *= 2;
-			int* temp = new int[cap];
-			for (int i = 0; i < count; ++i)
-				temp[i] = arr[i];
-			delete[] arr;
-			arr = temp;
+			break;
 		}
-
+		if (count >= cap)
+		{
+			expandArr(arr, cap);
+		}
 		arr[count] = x;
-		count++;
+		++count;
 	}
 }
 
@@ -41,21 +49,14 @@ void addrand(int*&arr,int& cap,int& count)
 	int n = 0;
 	int a = 0;
 	int b = 0;
-	cout << "¬ведите n " << endl;
 	cin >> n;
-	cout << "¬ведите a и b, где a - нижн€€ граница промежутка" << endl;
 	cin >> a;
 	cin >> b;
 	for (n; n > 0; --n)
 	{
-		if (count == cap)
+		if (count >= cap)
 		{
-			cap*2;
-			int* temp = new int[cap];
-			for (int i = 0; i < count; ++i)
-				temp[i] = arr[i];
-			delete[] arr;
-			arr = temp;
+			expandArr(arr, cap);
 		}
 		arr[count] = rand() % (b - a + 1) + a;
 		count++;
@@ -65,7 +66,7 @@ void addrand(int*&arr,int& cap,int& count)
 
 void reversecouple(int* arr, int count)
 {
-	for (int i = 0; i <= count; i = i + 2)
+	for (int i = 0; i < count; i = i + 2)
 	{
 		int x = 0;
 		if (i + 1 == count)
@@ -76,7 +77,6 @@ void reversecouple(int* arr, int count)
 		arr[i] = arr[i + 1];
 		arr[i + 1] = x;
 	}
-	cout << endl;
 }
 
 void allNumber(int* arr, int count)
@@ -116,7 +116,6 @@ void shift(int* arr, int count)
 void turn(int* arr, int count)
 {
 	int n = 0;
-	cout << "¬ведите индекс элемента, раздел€ющего половинки" << endl;
 	cin >> n;
 	if (n <= count - 1)
 	{
@@ -138,14 +137,8 @@ void turn(int* arr, int count)
 	}
 }
 
-int main(int argc, char* argv[])
+void cinMenu(int*& arr, int& cap, int& count)
 {
-	setlocale(LC_ALL, "Russian");
-	int cap = 10;
-	int* arr = new int[cap];
-	int count = 0;
-	expandArr(arr, cap, count);
-
 	int choice = -1;
 	while (choice != 0)
 	{
@@ -155,36 +148,50 @@ int main(int argc, char* argv[])
 		{
 		case 1:
 		{
-			addrand(arr, cap,count);
+			cout << "¬ведите n, а затем введите a и b, где a - нижн€€ граница промежутка" << endl;
+			addrand(arr, cap, count);
 			allNumber(arr, count);
 			break;
 		}
 		case 2:
 		{
-			reverse(arr,count);
+			reverse(arr, count);
 			allNumber(arr, count);
 			break;
 		}
 		case 3:
 		{
-			reversecouple( arr,count);
+			reversecouple(arr, count);
 			allNumber(arr, count);
 			break;
 		}
 		case 4:
 		{
-			shift(arr,count);
+			shift(arr, count);
 			allNumber(arr, count);
 			break;
 		}
 		case 5:
 		{
-			turn( arr,count);
+			cout << "¬ведите индекс элемента, раздел€ющего половинки" << endl;
+			turn(arr, count);
 			allNumber(arr, count);
 			break;
 		}
 		}
 	}
+}
+
+int main(int argc, char* argv[])
+{
+	setlocale(LC_ALL, "Russian");
+	int cap = 10;
+	int* arr = new int[cap];
+	int count = 0;
+	cout << "¬ведите числа в массив " << endl;
+	cinArr(arr, cap, count);
+	cinMenu(arr, cap, count);
+
 	delete[]arr;
 	return EXIT_SUCCESS;
 
