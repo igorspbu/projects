@@ -1,30 +1,37 @@
 #include<iostream>
 using namespace std;
 
-void expandArr(int*& arr, int& cap, int& count)
+void expand(int*& arr, int& cap)
 {
-	cout << "¬ведите числа в массив" << endl;
+	int cap1 = cap * 2;
+	int* temp = new int[cap1];
+	for (int i = 0; i < cap; ++i)
+	{
+		temp[i] = arr[i];
+	}
+	delete[]arr;
+	arr = temp;
+	cap = cap1;
+}
+
+void cinArr(int*& arr, int& cap, int& count)
+{
 	while (true)
 	{
 		int x = 0;
 		cin >> x;
 		if (x == 0)
-			break;
-		if (count == cap)
 		{
-			cap *= 2;
-			int* temp = new int[cap];
-			for (int i = 0; i < count; ++i)
-				temp[i] = arr[i];
-			delete[] arr;
-			arr = temp;
+			break;
 		}
-
+		if (count >= cap)
+		{
+			expand(arr, cap);
+		}
 		arr[count] = x;
-		count++;
+		++count;
 	}
 }
-
 
 int main(int argc, char* argv[])
 {
@@ -32,11 +39,29 @@ int main(int argc, char* argv[])
 	int cap = 10;
 	int* arr = new int[cap];
 	int count = 0;
-	expandArr(arr, cap, count);
 
-	for (int i = 0; i < count - 1; ++i)
+	cout << "¬ведите числа в массив" << endl;
+	cinArr(arr, cap, count);
+
+	int a = 1;
+	int sum = 0;
+	for (int i = 0; i < count; ++i)
 	{
-		int x = 0;
-		
+		int c = 0;
+		for (int b = i; b >= 0; --b)
+		{
+			c = arr[i];
+			c = c * arr[b];
+		}
+		cout << c << endl;
+		a = a * c;
+		sum = sum + a;
 	}
+	float ans = 0;
+	ans = sum / count;
+
+	cout << "—реднее арифметическое факториалов последовательности чисел равн€етс€ " << endl << ans << endl;
+
+	delete[]arr;
+	return EXIT_SUCCESS;
 }
