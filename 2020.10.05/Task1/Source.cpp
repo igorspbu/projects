@@ -101,43 +101,21 @@ void add(int*& arr, int* addedArr)
 	}
 }
 
-int* unify(int*& a, int* b)
+int* unify(int* a, int* b)
 {
-	int* result = initArray(10, 5);
-	*(result - 2) = *(a - 2) + *(b - 2);
-	if (*(result - 1) < *(result - 2))
-		expandArray(result);
-	int qwe = 0;
-	if (*(a - 2) <= *(b - 2))
+	int* result = initArray(*(a - 2) + *(b - 2), 0);
+	int* min = (*(a - 2) < *(b - 2) ? a : b);
+	int* max = (*(a - 2) <= *(b - 2) ? b : a);
+	for (int i = 0; i < *(min - 2); ++i)
 	{
-		for (int i = 0; i < *(a - 2); ++i)
-		{
-			*(result + qwe) = *(a + i);
-			*(result + qwe + 1) = *(b + i);
-			qwe += 2;
-		}
-		for (int i = *(a - 2); i < *(b - 2); ++i)
-		{
-			*(result + i) = *(b + i);
-		}
+		addElement(result, *(a + i));
+		addElement(result, *(b + i));
 	}
-	else
+	for (int i = *(min - 2); i < *(max - 2); ++i)
 	{
-		for (int i = 0; i < *(b - 2); ++i)
-		{
-			*(result + qwe) = *(a + i);
-			*(result + qwe + 1) = *(b + i);
-			qwe += 2;
-		}
-		for (int i = *(b - 2); i < *(a - 2); ++i)
-		{
-			*(result + i) = *(a + i);
-		}
+		addElement(result, *(max + i));
 	}
-	*(result - 2) = *(a - 2);
-	deleteArray(a);
-	a = result;
-	return a;
+	return result;
 }
 
 int extract(int* a, int index)
