@@ -45,8 +45,10 @@ void ArrayList::add(int element)
 void ArrayList::add(int index, int element)
 {
 	if (count == capacity)
+	{
 		ExpandArr(data, capacity);
-	for (int i = count; i > index + 1; --i)
+	}
+		for (int i = count; i > index + 1; --i)
 	{
 		data[i - 1] = data[i];
 	}
@@ -56,6 +58,10 @@ void ArrayList::add(int index, int element)
 
 bool ArrayList::addAll(ArrayList& list)
 {
+	if (list.count < 0)
+	{
+		return false;
+	}
 	for (int i = count; i < count + list.count; ++i)
 	{
 		if (count == capacity)
@@ -64,14 +70,14 @@ bool ArrayList::addAll(ArrayList& list)
 	}
 	count += list.count;
 	return true;
-	if (list.count < 0)
-		return false;
 }
 
 bool ArrayList::addAll(int index, ArrayList& list)
 {
 	if (index > count || index < 0)
+	{
 		return false;
+	}
 	else
 	{
 		for (int i = count - 1; i > index - 1; --i)
@@ -112,16 +118,18 @@ bool ArrayList::contains(int element)
 		}
 	}
 	if (q == 0)
+	{
 		return false;
+	}
 }
 
 int ArrayList::get(int index)
 {
-	int ret= data[index];
 	if (index >= count || index < 0)
+	{
 		return -1;
-	else
-		return ret;
+	}
+	return data[index];
 }
 
 int ArrayList::indexOf(int element)
@@ -136,7 +144,9 @@ int ArrayList::indexOf(int element)
 		}
 	}
 	if (q == 0)
+	{
 		return-1;
+	}
 }
 
 bool ArrayList::isEmpty()
@@ -165,7 +175,9 @@ void ArrayList::print()
 bool ArrayList::remove(int index)
 {
 	if (index >= count)
+	{
 		return false;
+	}
 	else
 	{
 		for (int i = index; i < count; ++i)
@@ -178,8 +190,10 @@ bool ArrayList::remove(int index)
 
 int ArrayList::swap(int index1, int index2)
 {
-	if (index1 >= count || index2 >= count||index1<0||index2<0)
+	if (index1 >= count || index2 >= count || index1 < 0 || index2 < 0)
+	{
 		return false;
+	}
 	else
 	{
 		int q = 0;
