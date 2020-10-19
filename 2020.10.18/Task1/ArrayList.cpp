@@ -14,11 +14,12 @@ int ArrayList::numLength(int number)
 	if (number < 0)
 	{
 		number *= -1;
-	}
-	if (count > 9)
-	{
 		++result;
-		count /= 10;
+	}
+	if (number > 9)
+	{
+		number /= 10;
+		++result;
 	}
 	return result;
 }
@@ -63,7 +64,7 @@ void ArrayList::expand()
 
 bool ArrayList::add(int element)
 {
-	if (count >= capacity)
+	if (count == capacity)
 	{
 		expand();
 	}
@@ -74,7 +75,7 @@ bool ArrayList::add(int element)
 
 bool ArrayList::add(int index, int element)
 {
-	if (count >= capacity)
+	if (count == capacity)
 	{
 		expand();
 	}
@@ -143,7 +144,7 @@ bool ArrayList::contains(int element)
 {
 	for (int i = 0; i < count; ++i)
 	{
-		if (data[i] = element)
+		if (data[i] == element)
 		{
 			return true;
 			break;
@@ -154,7 +155,7 @@ bool ArrayList::contains(int element)
 
 int ArrayList::get(int index)
 {
-	if (index >= count || index < 0)
+	if (index > count - 1 || index < 0)
 	{
 		return -1;
 	}
@@ -178,7 +179,7 @@ int ArrayList::indexOf(int element)
 {
 	for (int i = 0; i < count; ++i)
 	{
-		if (data[i] = element)
+		if (data[i] == element)
 		{
 			return i;
 			break;
@@ -199,7 +200,7 @@ char* ArrayList::toString()
 		delete[] str;
 		str = nullptr;
 	}
-	int length = 5 + numLength(count) + numLength(capacity);
+	int length = 7 + numLength(count) + numLength(capacity);
 	for (int i = 0; i < count; ++i)
 	{
 		length += numLength(data[i]);

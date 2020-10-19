@@ -33,7 +33,7 @@ void processChoice(ArrayList& a, int choice)
 	{
 		for (int i = 0; i < 10; ++i)
 		{
-			a.add(-rand() % 90 + 10);
+			a.add(-(rand() % 90 + 10));
 		}
 		cout << a.toString() << endl;
 	}
@@ -75,7 +75,7 @@ void processChoice(ArrayList& a, int choice)
 		{
 			if (a.get(i) < 0)
 			{
-				a.get(i) == 0;
+				a.set(i, 0);
 			}
 		}
 		cout << a.toString() << endl;
