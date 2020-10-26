@@ -6,6 +6,10 @@ ArrayList::~ArrayList()
 	{
 		delete[] data;
 	}
+	if (str != nullptr)
+	{
+		delete[] str;
+	}
 }
 
 ArrayList::ArrayList(const ArrayList& list)
