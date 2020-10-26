@@ -2,9 +2,9 @@
 
 ArrayList::~ArrayList()
 {
-	if (str != nullptr)
+	if (data != nullptr)
 	{
-		delete[] str;
+		delete[] data;
 	}
 }
 
@@ -12,7 +12,11 @@ ArrayList::ArrayList(const ArrayList& list)
 {
 	capacity = list.capacity;
 	count = list.count;
-	data = list.data;
+	data = new int[capacity];
+	for (int i = 0; i < count; ++i)
+	{
+		data[i] = list.data[i];
+	}
 	str = nullptr;
 }
 
