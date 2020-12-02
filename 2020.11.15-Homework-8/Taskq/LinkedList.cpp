@@ -194,51 +194,45 @@ std::ostream& operator<<(std::ostream& stream, const LinkedList list)
 
 int LinkedList::extractHead()
 {
-	if (count == 0)
+	if (head == nullptr)
 	{
-		return 0;
+		return -1;
 	}
-	else if (count == 1)
+	if (head == tail)
 	{
-		head = tail = nullptr;
+		int oldHead = head->data;
+		delete head;
+		tail = head = nullptr;
 		count = 0;
-		return 0;
+		return oldHead;
 	}
-	else
-	{
-		Node* temp = head;
-		head = head->next;
-		return temp->data;
-		delete temp;
-		--count;
-	}
+	int oldHead = head->data;
+	Node* node = head;
+	head = head->next;
+	delete node;
+	--count;
+	return oldHead;
 }
 
 int LinkedList::extractTail()
 {
-	if (count == 0)
+	if (tail == nullptr)
 	{
-		return 0;
+		return -1;
 	}
-	else if (count == 1)
+	if (head->next == nullptr)
 	{
-		head = tail = nullptr;
-		count = 0;
-		return 0;
+		return extractHead();
 	}
-	else
+	Node* node = head;
+	while (node->next != nullptr && node->next->next != nullptr)
 	{
-		int kaka = tail->data;
-		Node* temp = head;
-		while (temp->next != nullptr && temp->next->next != nullptr)
-		{
-			temp = temp->next;
-		}
-		delete temp->next;
-		temp->next = nullptr;
-		--count;
-		return kaka;
+		node = node->next;
 	}
+	int oldTail = node->data;
+	delete node->next;
+	node->next = nullptr;
+	return oldTail;
 }
 
 int LinkedList::extract(int index)
@@ -247,20 +241,38 @@ int LinkedList::extract(int index)
 	{
 		return -1;
 	}
+	if (count == 0)
+	{
+		head = tail = nullptr;
+	}
 	if (!indexValid(index))
 	{
 		return -1;
 	}
-	Node* temp = head;
-	for (int i = 0; i < index - 1; ++i)
+	int oldElement;
+	if (index == 0)
 	{
-			temp = temp->next;
+		oldElement = head->data;
+		extractHead();
 	}
-	Node* monke = temp->next;
-	int bugaga = temp->next->data;
-	temp->next = temp->next->next;
-	delete monke;
-	return bugaga;
+	else if (index == count - 1)
+	{
+		oldElement = tail->data;
+		extractTail();
+	}
+	else
+	{
+		Node* node = head;
+		for (int i = 0; i < index - 1; ++i)
+		{
+			node = node->next;
+		}
+		Node* temp = node->next;
+		oldElement = node->data;
+		node->next = node->next->next;
+		delete temp;
+	}
+	return oldElement;
 }
 
 void LinkedList::operator-=(int index)
@@ -271,7 +283,6 @@ void LinkedList::operator-=(int index)
 int LinkedList::indexOf(int element)
 {
 	Node* temp = head;
-	int qwe = -1;
 	for (int i = 0; i < count; ++i)
 	{
 		if (temp->data == element)
@@ -280,29 +291,21 @@ int LinkedList::indexOf(int element)
 		}
 		temp = temp->next;
 	}
-	return qwe;
+	return -1;
 }
 
 LinkedList& LinkedList::operator=(const LinkedList list)
 {
-	if (&list != this)
+	for (Node* temp = list.head; temp != nullptr; temp = temp->next)
 	{
-		Node* temp = head;
-		while (temp != nullptr)
-		{
-			Node* node = temp;
-			temp = temp->next;
-			delete node;
-		}
-		count = 0;
-		temp = list.head;
-		while (temp != nullptr)
-		{
-			addToTail(temp->data);
-			temp = temp->next;
-		}
+		addToTail(temp->data);
 	}
 	return *this;
+
+	while (count > 0)
+	{
+		extractHead();
+	}
 }
 
 bool LinkedList::contains(int element)
