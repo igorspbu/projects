@@ -97,7 +97,7 @@ void task4(int** data, int n)
 	}
 }
 
-void rightCorner(int** data, int n, int string, int column, int q)
+void rightCorner(int** data, int n, int& string, int& column, int& q)
 {
 	for (int i = 0; i < n; ++i)
 	{
@@ -105,6 +105,7 @@ void rightCorner(int** data, int n, int string, int column, int q)
 		++column;
 		++q;
 	}
+	--column;
 	for (int i = 0; i < n - 1; ++i)
 	{
 		++string;
@@ -113,15 +114,15 @@ void rightCorner(int** data, int n, int string, int column, int q)
 	}
 }
 
-void leftCorner(int** data, int n, int string, int column, int q)
+void leftCorner(int** data, int n, int& string, int& column, int& q)
 {
-	for (int i = n - 1; i > 1; --i)
+	for (int i = n - 1; i > 0; --i)
 	{
 		--column;
 		data[string][column] = q;
 		++q;
 	}
-	for (int i = n - 1; i > 0; --i)
+	for (int i = n - 1; i > 1; --i)
 	{
 		--string;
 		data[string][column] = q;
@@ -136,10 +137,11 @@ void task5(int** data, int n)
 	int string = 0;
 	int column = 0;
 	int q = 1;
-	while (n - i > 0)
+	while (i < (n + 1) / 2)
 	{
-		rightCorner(data, n - i, string, column, q);
-		leftCorner(data, n - i - 1, string, column, q);
+		rightCorner(data, n - 2 * i, string, column, q);
+		leftCorner(data, n - 2 * i, string, column, q);
+		++column;
 		++i;
 	}
 		
