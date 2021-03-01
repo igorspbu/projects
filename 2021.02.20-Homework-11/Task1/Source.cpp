@@ -1,34 +1,80 @@
 #include <iostream>
 using namespace std;
 
-void printBits(int)
+void printBitsInt(int s)
 {
-	cout << sizeof(int) * 8 << endl;
+	int bitLength = sizeof(s) * 8;
+	for (int i = 0; i < bitLength; ++i)
+	{
+		unsigned int bit = s;
+		bit = bit << i;
+		bit = bit >> (bitLength - 1);
+		cout << bit;
+	}
 }
 
-void printBits(long)
+void printBitsLongInt(long long int s)
 {
-	cout << sizeof(long) * 8 << endl;
+	int bitLength = sizeof(s) * 8;
+	for (int i = 0; i < bitLength; ++i)
+	{
+		unsigned long long int bit = s;
+		bit = bit << i;
+		bit = bit >> (bitLength - 1);
+		cout << bit;
+	}
 }
 
-void printBits(long long)
+void printBits(short s)
 {
-	cout << sizeof(long long) * 8 << endl;
+	int bitlength = sizeof(s) * 8;
+	for (int i = 0; i < bitlength; ++i)
+	{
+		unsigned short bit = s;
+		bit = bit << i;
+		bit = bit >> (bitlength - 1);
+		cout << bit;
+	}
 }
 
-void printBits(float)
+void printBitslong(long s)
 {
-	cout << sizeof(float) * 8 << endl;
+	int bitlength = sizeof(s) * 8;
+	for (int i = 0; i < bitlength; ++i)
+	{
+		unsigned short bit = s;
+		bit = bit << i;
+		bit = bit >> (bitlength - 1);
+		cout << bit;
+	}
 }
 
-void printBits(double)
+void printBits(float s)
 {
-	cout << sizeof(double) * 8 << endl;
+	void* ptr = &s;
+	int a = *(int*)(ptr);
+	printBitsInt(a);
 }
 
-void printBits(long double)
+void printBits(long long s)
 {
-	cout << sizeof(long double) * 8 << endl;
+	void* ptr = &s;
+	long long int a = *(long long int*)(ptr);
+	printBitsLongInt(a);
+}
+
+void printBits(double s)
+{
+	void* ptr = &s;
+	long long int a = *(long long int*)(ptr);
+	printBitsLongInt(a);
+}
+
+void printBits(long double s)
+{
+	void* ptr = &s;
+	long long int a = *(long long int*)(ptr);
+	printBitsLongInt(a);
 }
 
 double average(int n, ...)
@@ -37,7 +83,7 @@ double average(int n, ...)
 	int N = n;
 	for (int* ptr = &n; n > 0; --n)
 	{
-		sum +=*(++ptr);
+		sum += *(++ptr);
 	}
 	return (sum / N);
 }
@@ -51,22 +97,22 @@ int main()
 	float f = 1;
 	double d = 1;
 	long double ld = 1;
-	cout << "Количество бит в int :";
-	printBits(i);
+	cout << "int :";
+	printBitsInt(i);
 	cout << endl;
-	cout << "Количество бит в long :";
-	printBits(l);
+	cout << "long :";
+	printBitslong(l);
 	cout << endl;
-	cout << "Количество бит в long long :";
+	cout << "long long :";
 	printBits(ll);
 	cout << endl;
-	cout << "Количество бит в float :";
+	cout << "float :";
 	printBits(f);
 	cout << endl;
-	cout << "Количестов бит в double :";
+	cout << "double :";
 	printBits(d);
 	cout << endl;
-	cout << "Количество бит в long double :";
+	cout << "long double :";
 	printBits(ld);
 	cout << endl;
 	cout << endl;
