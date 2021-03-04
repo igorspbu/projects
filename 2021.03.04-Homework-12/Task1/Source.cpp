@@ -20,7 +20,7 @@ T1 mult(T1 a, T2 b)
 }
 
 template <typename T1, typename T2>
-T1 div(T1 a, T2 b)
+T1 divv(T1 a, T2 b)
 {
 	return (a / b);
 }
@@ -28,33 +28,39 @@ T1 div(T1 a, T2 b)
 template <typename T1, typename T2>
 T1 mod(T1 a, T2 b)
 {
-	return (a % b);
+	if (a < b)
+		return a;
+	else
+	{
+		while (a > b)
+			a -= b;
+		return a;
+	}
 }
 
 int operationIndex(char operation)
 {
-	int q = 0;
 	switch (operation)
 	{
 	case'+':
 	{
-		return q = 1;
+		return 0;
 	}
 	case '-':
 	{
-		return q = 2;
+		return 1;
 	}
 	case '*':
 	{
-		return q = 3;
+		return 2;
 	}
 	case '/':
 	{
-		return q = 4;
+		return 3;
 	}
 	case '%':
 	{
-		return q = 5;
+		return 4;
 	}
 	cout << "Вы ввели что-то не то " << endl;
 	break;
@@ -62,37 +68,28 @@ int operationIndex(char operation)
 }
 
 template <typename T1, typename T2>
-T1 calculate(T1 a, T2 b, char operation)
+T1 calculate(T1 a, T2 b, T1(*operations[5])(T1, T2){ sum, diff, mult, divv, mod })
 {
-	int q = operationIndex(operation);
-	if (q == 1)
-	{
-		cout << a << ' ' << operation << b << ' = ' << sum(a, b) << endl;
-	}
-	if (q == 2)
-	{
-		cout << a << ' ' << operation << b << ' = ' << diff(a, b) << endl;
-	}
-	if (q == 3)
-	{
-		cout << a << ' ' << operation << b << ' = ' << mult(a, b) << endl;
-	}
-	if (q == 4)
-	{
-		cout << a << ' ' << operation << b << ' = ' << div(a, b) << endl;
-	}
-	if (q == 5)
-	{
-		cout << a << ' ' << operation << b << ' = ' << mod(a, b) << endl;
-	}
+	return operations[operationIndex(operation)](a, b);
 }
 
-int main()
+int main(int argc, const char* argv[] )
 {
 	setlocale(LC_ALL, "Russian");
+
+	argv[1] = "--operand1";
+	argv[2] = "--operand2";
+	argv[3] = "--operator";
+
 	char operation = '0';
 	cout << "Введите операцию" << endl;
 	cin >> operation;
-	calculate(34, 21, operation);
+
+	for (int i = 0; i < argc; ++i)
+	{
+		cout << i << argv[i] << endl;
+	}
+
+	calculate(34.31, 321, operation);
 	return 0;
 }
