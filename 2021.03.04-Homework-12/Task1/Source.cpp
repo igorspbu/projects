@@ -68,28 +68,20 @@ int operationIndex(char operation)
 }
 
 template <typename T1, typename T2>
-T1 calculate(T1 a, T2 b, T1(*operations[5])(T1, T2){ sum, diff, mult, divv, mod })
+T1 calculate(T1 a, T2 b, char operation)
 {
+	T1(*operations[5])(T1, T2) { sum, diff, mult, divv, mod };
 	return operations[operationIndex(operation)](a, b);
 }
 
 int main(int argc, const char* argv[] )
 {
 	setlocale(LC_ALL, "Russian");
-
-	argv[1] = "--operand1";
-	argv[2] = "--operand2";
-	argv[3] = "--operator";
-
+		
 	char operation = '0';
 	cout << "¬ведите операцию" << endl;
 	cin >> operation;
 
-	for (int i = 0; i < argc; ++i)
-	{
-		cout << i << argv[i] << endl;
-	}
-
-	calculate(34.31, 321, operation);
+	cout << calculate(34.31, 321, operation) << endl;
 	return 0;
 }
