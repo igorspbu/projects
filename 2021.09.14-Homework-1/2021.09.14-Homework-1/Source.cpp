@@ -38,16 +38,16 @@ struct List
 
 	List& operator=(const List& l)
 	{
+		while (head != nullptr)
+		{
+			del_last();
+		}
+
 		for (Node* temp = l.head; temp != nullptr; temp = temp->next)
 		{
 			add_last(temp->data);
 		}
 		return *this;
-
-		while (head != nullptr)
-		{
-			del_last();
-		}
 	}
 
 	void add_first(int d)
@@ -116,7 +116,15 @@ struct List
 	
 	void add_last(int d)
 	{
-		last()->next = new Node(d, nullptr);
+		if (head != nullptr)
+		{
+			last()->next = new Node(d, nullptr);
+
+		}
+		else
+		{
+			head = new Node(d, nullptr);
+		}
 	}
 
 	void del_last()
@@ -241,8 +249,19 @@ int main()
 	cout << endl;
 	l.del_last();
 	l.print();
-	l.del();
-	l.print();
+	List q(l);
+	q.print();
+	/*l.del();
+	l.print();*/
+	for (int i = 0; i < 10; ++i)
+	{
+		q.add_first(rand() % 20 + 1);
+		q.print();
+	}
+	q.print();
+	q = l; 
+	q.print();
+
 
 	return EXIT_SUCCESS;
 }
