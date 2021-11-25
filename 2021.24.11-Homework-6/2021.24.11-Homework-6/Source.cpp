@@ -62,15 +62,24 @@ string f1()
 			cin >> number;
 			s += to_string(number);
 		}
-		if (x == '+' || x == '-' || x == '(')
+		if (x == '(')
 		{
+			sym.push(x);
+		}
+		else if (x == '+' || x == '-')
+		{
+			while (!sym.empty() && (sym.top() == '+' || sym.top() == '-' || sym.top() == '*' || sym.top() == '/'))
+			{
+				s += sym.top();
+				sym.pop();
+			}
 			cin.putback(x);
 			cin >> symbol;
 			sym.push(symbol);
 		}
 		else if (x == '*' || x == '/')
 		{
-			if (sym.top() == '*' || sym.top() == '/')
+			while (!sym.empty() && (sym.top() == '*' || sym.top() == '/'))
 			{
 				s += sym.top();
 				sym.pop();
@@ -107,6 +116,7 @@ int main()
 	//3 4 2 * 1 5 - / +
 	setlocale(LC_ALL, "Russian");
 	cout << "Обратная польская запись выражения: " << f1() << endl;
+	cin.clear();
 	cout << "Значение выражения, записанного в ОПЗ: " << f2() << endl;
 
 

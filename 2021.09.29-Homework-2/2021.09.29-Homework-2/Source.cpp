@@ -235,14 +235,6 @@ struct DList
 	void remove_if(bool function(int q))
 	{
 		DNode* w = head;
-		int i = 0;
-		while (w != nullptr)
-		{
-			++i;
-			w = w->next;
-		}
-		w = head;
-		int j = 0;
 		while (w != nullptr)
 		{
 			if (function(w->data) == true)
@@ -251,20 +243,15 @@ struct DList
 				{
 					del_last();
 				}
-				else if (w->next->next == nullptr)
+				if (w == head)
 				{
-					if (j >= 1)
-					{
-						delp(j - 1);
-					}
-					else
-					{
-						del_first();
-					}
+					delp(0);
 				}
 				else
-				{
-					
+				{					
+					w->perv->next = w->next;
+					w->next->perv = w->perv;
+					delete w;
 				}
 			}
 			else

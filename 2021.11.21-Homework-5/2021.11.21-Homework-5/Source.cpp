@@ -139,75 +139,75 @@ int main()
 	cin.clear();
 	print(v);
 
-	enlarge(v);
-	print(v);
+	//enlarge(v);
+	//print(v);
 
 	del(v);	
 	print(v);
 
-	int n = v.size();
-	double* ar = new double[n] {0};
-	copy(v.begin(), v.end(), ar);
-	for (int i = 0; i < v.size(); ++i)
-	{
-		cout << ar[i] << ' ';
-	}
-	cout << endl;
+	//int n = v.size();
+	//double* ar = new double[n] {0};
+	//copy(v.begin(), v.end(), ar);
+	//for (int i = 0; i < v.size(); ++i)
+	//{
+	//	cout << ar[i] << ' ';
+	//}
+	//cout << endl;
 
-	vector<double> q;
-	double w;
-	cout << "¬ведите числа" << endl;
-	while (cin >> w)
-	{
-		q.push_back(w);
-	}
-	v = contact(v, q);
-	print(v);
+	//vector<double> q;
+	//double w;
+	//cout << "¬ведите числа" << endl;
+	//while (cin >> w)
+	//{
+	//	q.push_back(w);
+	//}
+	//v = contact(v, q);
+	//print(v);
 
-	repeat(v, 3);
-	print(v);
+	//repeat(v, 3);
+	//print(v);
 
-	double e = 0;
-	cout << "¬ведите число дл€ поиска" << endl;
-	cin >> e;
-	vector<double>::iterator i = second_occure(v, e);
-	v.erase(i);
-	print(v);
+	//double e = 0;
+	//cout << "¬ведите число дл€ поиска" << endl;
+	//cin >> e;
+	//vector<double>::iterator i = second_occure(v, e);
+	//v.erase(i);
+	//print(v);
 
-	double r = 0;
-	cout << "¬ведите элемент" << endl;
-	cin >> r;
-	i = last_occure(v, r);
-	v.erase(i);
-	print(v);
+	//double r = 0;
+	//cout << "¬ведите элемент" << endl;
+	//cin >> r;
+	//i = last_occure(v, r);
+	//v.erase(i);
+	//print(v);
 
-	vector<int> a;
-	int t;
-	cout << "¬ведите целые числа" << endl;
-	while (cin >> t)
-	{
-		a.push_back(t);
-	}
-	cin.clear();
-	print(a);
-	sort(a.begin(), a.end());
-	print(a);
-	int element = 0;
-	cout << "¬ведите элемент" << endl;
-	cin >> element;
-	vector<int>::iterator p = f1(a, element);
-	a.erase(p);
-	print(a);
+	//vector<int> a;
+	//int t;
+	//cout << "¬ведите целые числа" << endl;
+	//while (cin >> t)
+	//{
+	//	a.push_back(t);
+	//}
+	//cin.clear();
+	//print(a);
+	//sort(a.begin(), a.end());
+	//print(a);
+	//int element = 0;
+	//cout << "¬ведите элемент" << endl;
+	//cin >> element;
+	//vector<int>::iterator p = f1(a, element);
+	//a.erase(p);
+	//print(a);
 
-	int i1 = 0;
-	int j1 = 0;
-	double el = 0;
-	sort(v.begin(), v.end());
-	print(v);
-	cout << "¬ведите искомый элемент" << endl;
-	cin >> el;
-	f2(v, i1, j1, el);
-	cout << "»ндекс i: " << i1 << ", индекс j: " << j1 << endl;
+	//int i1 = 0;
+	//int j1 = 0;
+	//double el = 0;
+	//sort(v.begin(), v.end());
+	//print(v);
+	//cout << "¬ведите искомый элемент" << endl;
+	//cin >> el;
+	//f2(v, i1, j1, el);
+	//cout << "»ндекс i: " << i1 << ", индекс j: " << j1 << endl;
 
 
 

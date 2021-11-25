@@ -113,7 +113,7 @@ int main()
 		Zelenograg
 		89161335567
 		Galina
-		Moscow
+		
 		*/
 
 	return EXIT_SUCCESS;
