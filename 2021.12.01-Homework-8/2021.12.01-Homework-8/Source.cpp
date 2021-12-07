@@ -20,6 +20,7 @@ void f_reflect(BNode* p);
 int f_mult(BNode* p);
 int f_eval(BNode* p);
 int min(BNode* p);
+void f_del(BNode* &p);
 
 struct BTree
 {
@@ -36,6 +37,17 @@ struct BTree
 	{
 		return f_count(root);
 	}
+
+	~BTree()
+	{
+		f_del(root);
+	}
+	
+	static void del0(BNode* &p);
+	static void delLeaves(BNode*& p);
+	static void enlarge(BNode*& p, int d);
+	static void dell(BNode*& p);
+	static int sum_alt(BNode*& p, int sum = 0);
 };
 
 void f_print(BNode* r, int indent)
@@ -149,13 +161,13 @@ int f_eval(BNode* p)
 	}
 }
 
-int min(BNode* p)
-{
-	if (p != nullptr)
-	{
-
-	}
-}
+//int min(BNode* p)
+//{
+//	if (p != nullptr)
+//	{
+//
+//	}
+//}
 
 template <class T>
 BNode* f_find(T d, BNode* p)
@@ -172,11 +184,119 @@ BNode* f_find(T d, BNode* p)
 	}
 }
 
+void f_del(BNode* &p)
+{
+	if (p == nullptr)
+	{
+		return;
+	}
+	f_del(p->left);
+	f_del(p->right);
+	delete p;
+	p = nullptr;
+}
+
+void BTree::del0(BNode*& p)
+{
+	if (p != nullptr)
+	{
+		if (p->data == 0)
+		{
+			f_del(p);
+		}
+		else
+		{
+			del0(p->left);
+			del0(p->right);
+		}
+	}
+}
+
+void BTree::delLeaves(BNode*& p)
+{
+	if (p != nullptr)
+	{
+		if (p->left == nullptr && p->right == nullptr)
+		{
+			f_del(p);
+		}
+		else
+		{
+			delLeaves(p->left);
+			delLeaves(p->right);
+		}
+	}
+}
+
+void BTree::enlarge(BNode*& p, int d)
+{
+	if (p == nullptr)
+	{
+		BNode* q = new BNode(d);
+		p = q;
+	}
+	else
+	{
+		enlarge(p->left, d);
+		enlarge(p->right, d);
+	}
+}
+
+void BTree::dell(BNode*& p)
+{
+	if (p == nullptr)
+	{
+		return;
+	}
+	else
+	{
+		if (p->left != nullptr)
+		{
+			if (p->left->data == 1)
+			{
+				f_del(p->left->left);
+				BNode* q = p->left;
+				p->left = q->right;
+				delete q;
+				q = nullptr;
+			}
+		}
+		if (p->right != nullptr)
+		{
+			if (p->right->data == 1)
+			{
+				f_del(p->right->left);
+				BNode* q = p->right;
+				p->right = q->right;
+				delete q;
+				q = nullptr;
+			}
+		}
+		dell(p->left);
+		dell(p->right);
+	}
+}
+
+int BTree::sum_alt(BNode*& p, int sum)
+{
+	if (p != nullptr)
+	{
+		if (p->left != nullptr)
+		{
+			sum -= p->left->data + sum_alt(p->left);
+		}
+		if (p->right != nullptr)
+		{
+			sum += p->right->data + sum_alt(p->right);
+		}
+	}
+	return sum;
+}
 
 
 int main()
 {
-	BNode* p6 = new BNode(6),
+	/*BNode* p6 = new BNode(6),
 		* p5 = new BNode(5),
 		* p4 = new BNode(4),
 		* p3 = new BNode(3, p6),
@@ -228,9 +348,36 @@ int main()
 		
 	cout << "________________________________" << endl;
 	q.print();
-	cout << f_find(7, q1) << endl;
+	cout << f_find(7, q1) << endl;*/
 
+	BNode* q6 = new BNode(9),
+		* q7 = new BNode(7),
+		* q8 = new BNode(10),
+		* q9 = new BNode(5),
+		* q10 = new BNode(0),
+		* q11 = new BNode(7),
+		* q4 = new BNode(0, q8, q9),
+		* q5 = new BNode(1, q10, q11),
+		* q2 = new BNode(2, q4, q5),
+		* q3 = new BNode(3, q6, q7),
+		* q1 = new BNode(10, q2, q3);
+	BTree t(q1);
+	t.print();
 
+	t.dell(q1);
+	t.print();
 
+	t.del0(q1);
+	t.print();
+
+	t.delLeaves(q1);
+	t.print();
+
+	t.enlarge(q1, 5);
+	t.print();
+
+	int sum = 0;
+	cout << "_--__--___-_-___---_-" << endl;
+	cout << t.sum_alt(q1, sum)<< endl;
 	return EXIT_SUCCESS;
 }
