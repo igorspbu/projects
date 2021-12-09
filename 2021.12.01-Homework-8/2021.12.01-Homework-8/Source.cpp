@@ -19,7 +19,7 @@ int f_height(BNode* p);
 void f_reflect(BNode* p);
 int f_mult(BNode* p);
 int f_eval(BNode* p);
-int min(BNode* p);
+int min(BNode* p, int min);
 void f_del(BNode* &p);
 
 struct BTree
@@ -161,13 +161,25 @@ int f_eval(BNode* p)
 	}
 }
 
-//int min(BNode* p)
-//{
-//	if (p != nullptr)
-//	{
-//
-//	}
-//}
+int f_min(BNode* p, int min)
+{
+	if (p != nullptr)
+	{
+		if (p->data < min)
+		{
+			min = p->data;
+		}
+		if (f_min(p->left, min) < min)
+		{
+			min = f_min(p->left, min);
+		}
+		if (f_min(p->right, min) < min)
+		{
+			min = f_min(p->right, min);
+		}
+	}
+	return min;
+}
 
 template <class T>
 BNode* f_find(T d, BNode* p)
@@ -326,14 +338,14 @@ int main()
 	t.print();
 
 	cout << "________________________________" << endl;
-	cout << f_mult(p1) << endl;
+	cout << f_mult(p1) << endl;*/
 
 
 	BNode* q6 = new BNode(9),
 		* q7 = new BNode(7),
 		* q8 = new BNode(10),
 		* q9 = new BNode(5),
-		* q10 = new BNode(6),
+		* q10 = new BNode(0),
 		* q11 = new BNode(7),
 		* q4 = new BNode(4, q8, q9),
 		* q5 = new BNode(1, q10, q11),
@@ -343,14 +355,19 @@ int main()
 	BTree q(q1);
 	cout << "________________________________" << endl;
 	q.print();
-	cout << "________________________________" << endl;
-	cout << f_eval(q1) << endl;
-		
+	//cout << "________________________________" << endl;
+	//cout << f_eval(q1) << endl;
+	//	
+	//cout << "________________________________" << endl;
+	//q.print();
+	//cout << f_find(7, q1) << endl;
+
 	cout << "________________________________" << endl;
 	q.print();
-	cout << f_find(7, q1) << endl;*/
+	int min = 1;
+	cout << f_min(q1, min) << endl;
 
-	BNode* q6 = new BNode(9),
+	/*BNode* q6 = new BNode(9),
 		* q7 = new BNode(7),
 		* q8 = new BNode(10),
 		* q9 = new BNode(5),
@@ -378,6 +395,7 @@ int main()
 
 	int sum = 0;
 	cout << "_--__--___-_-___---_-" << endl;
-	cout << t.sum_alt(q1, sum)<< endl;
+	cout << t.sum_alt(q1, sum)<< endl;*/
+
 	return EXIT_SUCCESS;
 }
