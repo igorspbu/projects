@@ -239,23 +239,31 @@ struct DList
 		{
 			if (function(w->data) == true)
 			{
+				cout << w->data << "\t";
 				if (w->next == nullptr)
 				{
 					del_last();
+					w = w->next;
 				}
-				if (w == head)
+				else if (w == head)
 				{
 					delp(0);
+					w = w->next;
 				}
 				else
-				{					
+				{		
+					DNode* q = w;
 					w->perv->next = w->next;
 					w->next->perv = w->perv;
-					delete w;
+					delete q;
+					/*w->perv->next = w->next;
+					w->next->perv = w->perv;
+					delete w;*/
 				}
 			}
 			else
 			{
+				cout << w->data << "\t";
 				w = w->next;
 			}
 		}
@@ -367,7 +375,7 @@ int main()
 	}
 	l.Print();
 
-	l.add_after_first(10);
+	/*l.add_after_first(10);
 	l.Print();
 
 	l.del_last();
@@ -391,10 +399,10 @@ int main()
 	{
 		l.add_first(rand() % 20 + 1);
 	}
-	l.Print();
+	l.Print();*/
 
-	DList w = DList(l);
-	w.Print();
+	//DList w = DList(l);
+	//w.Print();
 
 	cout << "Remove_if" << endl;
 	l.remove_if(parity);

@@ -19,7 +19,7 @@ int f_height(BNode* p);
 void f_reflect(BNode* p);
 int f_mult(BNode* p);
 int f_eval(BNode* p);
-int min(BNode* p, int min);
+int f_min(BNode* p, int min);
 void f_del(BNode* &p);
 
 struct BTree
@@ -190,8 +190,17 @@ BNode* f_find(T d, BNode* p)
 		{
 			return p;
 		}
-		f_find(d, p->left);
-		f_find(d, p->right);
+		if (f_find(d, p->left) != nullptr || f_find(d, p->right) != nullptr)
+		{
+			if (f_find(d, p->left) == nullptr)
+			{
+				return f_find(d, p->right);
+			}
+			if (f_find(d, p->right) == nullptr)
+			{
+				return f_find(d, p->left);
+			}
+		}
 		return nullptr;
 	}
 }
@@ -353,19 +362,19 @@ int main()
 		* q3 = new BNode(3, q6, q7),
 		* q1 = new BNode(1, q2, q3);
 	BTree q(q1);
+	/*cout << "________________________________" << endl;
+	q.print();*/
+	/*cout << "________________________________" << endl;
+	cout << f_eval(q1) << endl;
+		*/
 	cout << "________________________________" << endl;
 	q.print();
-	//cout << "________________________________" << endl;
-	//cout << f_eval(q1) << endl;
-	//	
-	//cout << "________________________________" << endl;
-	//q.print();
-	//cout << f_find(7, q1) << endl;
+	cout << f_find(100, q1) << endl;
 
-	cout << "________________________________" << endl;
+	/*cout << "________________________________" << endl;
 	q.print();
-	int min = 1;
-	cout << f_min(q1, min) << endl;
+	int min = 10000000;
+	cout << f_min(q1, min) << endl;*/
 
 	/*BNode* q6 = new BNode(9),
 		* q7 = new BNode(7),
